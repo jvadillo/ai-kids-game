@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="eu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hitzak Ikasten</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap" rel="stylesheet"> <style>
+        :root {
+            --primary-bg: #e0f7fa;
+            --container-bg: #ffffff;
+            --primary-text: #004d40;
+            --accent-color: #00796b;
+            --border-color-light: #b2dfdb;
+            --border-color-dashed: #4db6ac;
+            --box-bg: #e0f2f7;
+            --tile-bg: #ffcc80;
+            --tile-border: #f57c00;
+            --tile-text: #bf360c;
+            --correct-flash-bg: #a7ffeb;
+            --incorrect-flash-bg: #ffcdd2;
+            --level-up-flash-bg: #fff9c4;
+            --feedback-correct: #2e7d32;
+            --feedback-info: #00796b;
+            --feedback-level-up: #ff6f00;
+            --font-family-normal: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+            /* Using Comic Neue as a child-friendly alternative */
+            --font-family-child: 'Comic Neue', 'Comic Sans MS', cursive, sans-serif;
+            --box-size: 50px;
+            --tile-size: 45px;
+            --border-radius: 8px;
+            --button-bg: #009688;
+            --button-text: #ffffff;
+            --button-hover-bg: #00796b;
+            --options-button-bg: #607d8b; /* Bluish grey */
+            --options-button-hover-bg: #546e7a;
+            --modal-bg: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+            --modal-content-bg: #ffffff;
+            --emoji-font-size: 80px;
+            --button-emoji-font-size: 24px;
+        }
+
+        /* Apply base font */
+        body {
+            font-family: var(--font-family-normal); /* Default font */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            background-color: var(--primary-bg);
+            color: var(--primary-text);
+            margin: 0;
+            padding: 20px 10px;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transition: font-family 0.3s ease; /* Smooth font transition */
+        }
+
+        /* Class to switch to child-friendly font */
+        body.font-child {
+            font-family: var(--font-family-child);
+        }
+        body.font-child h1, body.font-child h2, body.font-child button, body.font-child label {
+             font-family: var(--font-family-child); /* Ensure buttons etc also use the font */
+        }
+        body.font-child .letter-tile, body.font-child .word-box {
+             font-family: var(--font-family-child); /* Apply to game elements */
+             font-weight: bold; /* Ensure letters are bold in child font */
+        }
+
+
+        /* Updated Title */
+        h1 {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        /* Start Screen Styling */
+        #start-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-color: var(--container-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 700px; /* Slightly wider for 3 columns */
+        }
+
+        #start-screen h2 {
+            color: var(--accent-color);
+            margin-bottom: 25px;
+        }
+
+        /* Theme Buttons: 3 per row */
+        #theme-buttons {
+            display: grid;
+            /* Force 3 columns */
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            width: 100%;
+        }
+
+        .theme-button {
+            padding: 15px 10px;
+            font-size: 1em;
+            font-weight: bold;
+            color: var(--button-text);
+            background-color: var(--button-bg);
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            border-bottom: 3px solid var(--button-hover-bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 100px;
+        }
+        .theme-button .emoji-icon { font-size: var(--button-emoji-font-size); line-height: 1; margin-bottom: 5px; }
+        .theme-button span { display: block; }
+        .theme-button:hover, .theme-button:focus { background-color: var(--button-hover-bg); transform: translateY(-2px); outline: none; }
+        .theme-button:active { transform: translateY(0px); }
+
+        /* Game Screen Styling */
+        #game-screen {
+            display: none;
+            width: 100%;
+            max-width: 600px;
+            flex-direction: column;
+            align-items: center;
+        }
+        #game-container {
+            background-color: var(--container-bg);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+
+        /* Controls Styling: Group buttons */
+         #controls {
+             width: 100%;
+             max-width: 600px;
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+             margin-top: 10px;
+             margin-bottom: 10px;
+             padding: 0 10px;
+             box-sizing: border-box;
+             gap: 10px; /* Add gap between control groups */
+         }
+         .control-buttons { /* Group for Back and Options */
+             display: flex;
+             gap: 10px;
+         }
+
+        #back-button, #options-button { /* Style both buttons */
+             padding: 10px 15px; /* Adjusted padding */
+             font-size: 0.9em;
+             font-weight: bold;
+             color: var(--button-text);
+             border: none;
+             border-radius: var(--border-radius);
+             cursor: pointer;
+             transition: background-color 0.2s ease;
+        }
+        #back-button {
+             background-color: #ff9800; /* Orange */
+             border-bottom: 3px solid #f57c00;
+        }
+        #back-button:hover, #back-button:focus { background-color: #f57c00; outline: none; }
+
+        #options-button {
+             background-color: var(--options-button-bg); /* Bluish grey */
+             border-bottom: 3px solid var(--options-button-hover-bg);
+        }
+        #options-button:hover, #options-button:focus { background-color: var(--options-button-hover-bg); outline: none; }
+
+         #level-indicator {
+             font-size: 1.1em;
+             font-weight: bold;
+             color: var(--accent-color);
+             background-color: var(--box-bg);
+             padding: 5px 15px;
+             border-radius: var(--border-radius);
+             border: 1px solid var(--border-color-light);
+             white-space: nowrap; /* Prevent wrapping */
+         }
+
+        /* Emoji Container in Game */
+        #emoji-container { margin-bottom: 20px; height: 150px; width: 100%; display: flex; align-items: center; justify-content: center; font-size: var(--emoji-font-size); line-height: 1; color: #333; }
+
+        /* Word Boxes */
+        #word-boxes-container { display: flex; gap: 8px; margin-bottom: 25px; flex-wrap: wrap; justify-content: center; min-height: calc(var(--box-size) + 4px); }
+        .word-box { width: var(--box-size); height: var(--box-size); background-color: var(--box-bg); border: 2px dashed var(--border-color-dashed); border-radius: var(--border-radius); display: flex; align-items: center; justify-content: center; font-size: calc(var(--box-size) * 0.6); font-weight: bold; color: var(--accent-color); transition: background-color 0.2s ease, transform 0.1s ease, border-style 0.2s; position: relative; }
+        .word-box.filled { border-style: solid; background-color: #c8e6c9; }
+        .word-box.correct-flash { animation: flash-correct 0.5s ease; }
+        .word-box.incorrect-flash { animation: flash-incorrect 0.5s ease; }
+        .word-box.level-up-flash { animation: flash-level-up 1s ease; }
+        @keyframes flash-correct { 0%, 100% { background-color: var(--box-bg); transform: scale(1); } 50% { background-color: var(--correct-flash-bg); transform: scale(1.1); } }
+        @keyframes flash-incorrect { 0%, 100% { background-color: var(--box-bg); transform: scale(1); } 50% { background-color: var(--incorrect-flash-bg); transform: scale(0.9); } }
+        @keyframes flash-level-up { 0%, 100% { background-color: var(--box-bg); } 50% { background-color: var(--level-up-flash-bg); transform: scale(1.1); } }
+
+        /* Letter Pool - Background removed */
+        #letter-pool-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            padding: 15px;
+            /* background-color: #f0f0f0; */ /* Removed background */
+            border-radius: var(--border-radius);
+            min-height: calc(var(--tile-size) + 10px);
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid var(--border-color-light); /* Optional: add a light border */
+        }
+
+        .letter-tile { width: var(--tile-size); height: var(--tile-size); background-color: var(--tile-bg); border: 1px solid #ffa726; border-bottom: 4px solid var(--tile-border); border-radius: var(--border-radius); display: flex; align-items: center; justify-content: center; font-size: calc(var(--tile-size) * 0.6); font-weight: bold; color: var(--tile-text); cursor: grab; transition: background-color 0.2s, opacity 0.2s, transform 0.1s, box-shadow 0.2s; touch-action: none; position: relative; }
+        .letter-tile.dragging { opacity: 0.5; cursor: grabbing; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transform: scale(1.1); z-index: 1000; }
+        .touch-ghost { position: absolute; pointer-events: none; opacity: 0.8; z-index: 1001; }
+
+        /* Feedback Message Area */
+        #feedback-message { margin-top: 15px; font-size: 1.1em; font-weight: bold; min-height: 25px; /* Use min-height */ color: var(--feedback-info); text-align: center; transition: opacity 0.5s ease, color 0.5s ease; padding: 0 5px; /* Add padding */ }
+        #feedback-message.correct { color: var(--feedback-correct); }
+        #feedback-message.level-up { color: var(--feedback-level-up); }
+
+        /* Options Modal Styling */
+        #options-modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1001; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* Enable scroll if needed */
+            background-color: var(--modal-bg);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background-color: var(--modal-content-bg);
+            margin: auto;
+            padding: 25px 30px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            color: var(--primary-text);
+        }
+        .modal-content h3 {
+            margin-top: 0;
+            color: var(--accent-color);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .modal-option {
+            margin-bottom: 15px;
+        }
+        .modal-option label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+         .modal-option input[type="radio"], .modal-option select {
+             margin-right: 5px;
+         }
+         .modal-option select {
+             padding: 5px 8px;
+             border-radius: 4px;
+             border: 1px solid var(--border-color-light);
+             min-width: 150px;
+         }
+         .modal-radio-group label {
+             display: inline-block; /* Keep radio labels inline */
+             margin-right: 15px;
+             font-weight: normal;
+         }
+
+        #modal-close-button {
+            display: block; /* Make it a block element */
+            margin: 20px auto 0; /* Center horizontally */
+            padding: 10px 25px;
+            background-color: var(--options-button-bg);
+            color: var(--button-text);
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            font-weight: bold;
+        }
+        #modal-close-button:hover {
+            background-color: var(--options-button-hover-bg);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) { /* Adjust breakpoint for 3 columns */
+             #theme-buttons {
+                 grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Back to auto-fit */
+             }
+        }
+        @media (max-width: 640px) {
+             .theme-button { padding: 12px 8px; font-size: 0.9em; min-height: 90px; }
+             .theme-button .emoji-icon { font-size: calc(var(--button-emoji-font-size) * 0.9); }
+             :root { --emoji-font-size: 70px; }
+             #level-indicator { font-size: 1em; padding: 4px 12px; }
+             #controls { flex-wrap: wrap; justify-content: center; } /* Allow wrapping */
+             .control-buttons { margin-bottom: 10px; } /* Add space when wrapped */
+        }
+        @media (max-width: 480px) {
+            h1 { font-size: 1.5em; }
+            :root { --box-size: 40px; --tile-size: 38px; --emoji-font-size: 60px; --button-emoji-font-size: 20px; }
+            #game-container, #start-screen { padding: 15px; width: 95%; }
+            #emoji-container { height: 100px; }
+            #word-boxes-container { gap: 5px; margin-bottom: 20px; }
+            #letter-pool-container { gap: 8px; padding: 10px; }
+            #feedback-message { font-size: 1em; min-height: 40px; }
+            .theme-button { min-height: 80px; gap: 5px; }
+            #controls { flex-direction: column; gap: 10px; }
+            #level-indicator { order: -1; }
+            .modal-content { width: 90%; padding: 20px; }
+        }
+         @media (max-width: 360px) {
+             h1 { font-size: 1.3em; }
+             :root { --box-size: 35px; --tile-size: 33px; --emoji-font-size: 50px; --button-emoji-font-size: 18px; }
+             #word-boxes-container { gap: 4px; }
+             #letter-pool-container { gap: 5px; }
+             #theme-buttons { grid-template-columns: repeat(2, 1fr); }
+             .theme-button { min-height: 75px; }
+             #feedback-message { font-size: 0.9em; }
+             #back-button, #options-button { font-size: 0.8em; padding: 8px 12px; }
+             #level-indicator { font-size: 0.9em; padding: 4px 10px;}
+         }
+    </style>
+</head>
+<body>
+    <h1>Hitzak Ikasten</h1>
+
+    <div id="start-screen">
+        <h2>Aukeratu gai bat</h2>
+        <div id="theme-buttons">
+            <button class="theme-button" data-theme="animaliak"> <span class="emoji-icon">🐾</span> <span>Animaliak</span> </button>
+            <button class="theme-button" data-theme="eskola"> <span class="emoji-icon">✏️</span> <span>Eskola</span> </button>
+            <button class="theme-button" data-theme="arropa"> <span class="emoji-icon">👕</span> <span>Arropa</span> </button>
+            <button class="theme-button" data-theme="koloreak"> <span class="emoji-icon">🎨</span> <span>Koloreak</span> </button>
+            <button class="theme-button" data-theme="parkea"> <span class="emoji-icon">🌳</span> <span>Parkea</span> </button>
+            <button class="theme-button" data-theme="janaria"> <span class="emoji-icon">🍎</span> <span>Janaria</span> </button>
+        </div>
+    </div>
+
+    <div id="game-screen">
+         <div id="controls">
+             <div class="control-buttons"> <button id="back-button">Gai Aldatu</button>
+                 <button id="options-button">Aukerak</button> </div>
+             <div id="level-indicator">Maila: 1</div>
+         </div>
+        <div id="game-container">
+            <div id="emoji-container"></div>
+            <div id="word-boxes-container"></div>
+            <div id="letter-pool-container"></div>
+            <div id="feedback-message">Arrastatu letrak kutxetara!</div>
+        </div>
+    </div>
+
+    <div id="options-modal">
+        <div class="modal-content">
+            <h3>Aukerak</h3>
+            <div class="modal-option">
+                <label>Letra mota:</label>
+                <div class="modal-radio-group">
+                    <label>
+                        <input type="radio" name="letterCase" value="upper" checked> Letra larriak (ABC)
+                    </label>
+                    <label>
+                        <input type="radio" name="letterCase" value="lower"> Letra xeheak (abc)
+                    </label>
+                </div>
+            </div>
+            <div class="modal-option">
+                <label for="font-style-select">Letra-tipoa:</label>
+                <select id="font-style-select">
+                    <option value="normal" selected>Normala</option>
+                    <option value="child">Haurrentzako</option>
+                </select>
+            </div>
+            <button id="modal-close-button">Itxi</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Configuration ---
+            const themes = { /* Basque themes remain the same */
+                animaliak: [ { word: 'katu', emoji: '🐱' }, { word: 'txakur', emoji: '🐶' }, { word: 'arrain', emoji: '🐠' }, { word: 'ahate', emoji: '🦆' }, { word: 'behi', emoji: '🐄' }, { word: 'igel', emoji: '🐸' }, ],
+                eskola: [ { word: 'liburu', emoji: '📖' }, { word: 'arkatz', emoji: '✏️' }, { word: 'mahai', emoji: '🪵' }, { word: 'goma', emoji: '🧼' }, { word: 'paper', emoji: '📄' }, ],
+                arropa: [ { word: 'txano', emoji: '🧢' }, { word: 'gona', emoji: '👗' }, { word: 'bota', emoji: '👢' }, { word: 'blusa', emoji: '👚' }, { word: 'motz', emoji: '🩳' }, ],
+                koloreak: [ { word: 'gorri', emoji: '❤️' }, { word: 'urdin', emoji: '💙' }, { word: 'berde', emoji: '💚' }, { word: 'arrosa', emoji: '🩷' }, { word: 'lila', emoji: '💜' }, ],
+                parkea: [ { word: 'zuhaitz', emoji: '🌳' },{ word: 'lore', emoji: '🌸' }, { word: 'banku', emoji: '🪵' }, { word: 'pilota', emoji: '⚽' }, { word: 'hodei', emoji: '☁️' }, ],
+                janaria: [ { word: 'madari', emoji: '🍐' }, { word: 'ogi', emoji: '🍞' }, { word: 'mahats', emoji: '🍇' }, { word: 'arrautz', emoji: '🥚' },{ word: 'gazta', emoji: '🧀' }, { word: 'tarta', emoji: '🍰' }, ]
+            };
+            const WORDS_PER_LEVEL = 3;
+            const MAX_DISTRACTORS_CAP = 3;
+            const COMPLETION_DELAY_MS = 1500;
+            const LEVEL_UP_DELAY_MS = 2500;
+            const THEME_COMPLETE_DELAY_MS = 2500; // Delay before showing themes after completion
+
+            // --- DOM Elements ---
+            const bodyElement = document.body;
+            const startScreen = document.getElementById('start-screen');
+            const gameScreen = document.getElementById('game-screen');
+            const themeButtonsContainer = document.getElementById('theme-buttons');
+            const backButton = document.getElementById('back-button');
+            const optionsButton = document.getElementById('options-button'); // Options button
+            const levelIndicator = document.getElementById('level-indicator');
+            const emojiContainer = document.getElementById('emoji-container');
+            const wordBoxesContainer = document.getElementById('word-boxes-container');
+            const letterPoolContainer = document.getElementById('letter-pool-container');
+            const feedbackMessage = document.getElementById('feedback-message');
+            const optionsModal = document.getElementById('options-modal'); // Options modal
+            const modalCloseButton = document.getElementById('modal-close-button'); // Modal close button
+            const fontStyleSelect = document.getElementById('font-style-select'); // Font select
+            const letterCaseRadios = document.querySelectorAll('input[name="letterCase"]'); // Case radios
+
+            // --- Game State ---
+            let currentWordList = [];
+            let currentWordIndex = 0;
+            let currentWord = '';
+            let currentEmoji = '';
+            let lettersInBoxes = [];
+            let draggedElement = null;
+            let ghostElement = null;
+            let offsetX = 0, offsetY = 0;
+            let currentLevel = 1;
+            let wordsCorrectThisLevel = 0;
+            // Options State
+            let letterCaseOption = 'upper'; // 'upper' or 'lower'
+            let fontStyleOption = 'normal'; // 'normal' or 'child'
+
+            // --- Utility Functions ---
+            function shuffleArray(array) { /* Fisher-Yates shuffle */
+                 for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [array[i], array[j]] = [array[j], array[i]]; } return array;
+            }
+
+            // Apply current options (case and font) to relevant elements
+            function applyOptions() {
+                // Font style
+                bodyElement.classList.toggle('font-child', fontStyleOption === 'child');
+
+                // Letter case (update existing tiles/boxes if game is active)
+                document.querySelectorAll('.letter-tile, .word-box').forEach(el => {
+                    if (el.textContent) { // Only update if there's text
+                         el.textContent = formatLetter(el.textContent);
+                    }
+                });
+            }
+
+            // Format letter based on case option
+            function formatLetter(letter) {
+                if (!letter) return '';
+                return letterCaseOption === 'lower' ? letter.toLowerCase() : letter.toUpperCase();
+            }
+
+            function generateLetterPool(word, level) {
+                const wordLetters = word.toUpperCase().split(''); // Always work with uppercase internally
+                let finalPoolLetters = [...wordLetters];
+                const numDistractors = Math.min(Math.max(0, level - 1), MAX_DISTRACTORS_CAP);
+
+                if (numDistractors > 0) {
+                    const alphabet = 'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ';
+                    let distractors = [];
+                    let attempts = 0;
+                    while (distractors.length < numDistractors && attempts < 100) {
+                        const randomLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
+                        if (!wordLetters.includes(randomLetter) && !distractors.includes(randomLetter)) {
+                            distractors.push(randomLetter);
+                        }
+                        attempts++;
+                    }
+                    finalPoolLetters = finalPoolLetters.concat(distractors);
+                }
+                // Format letters for display based on current option BEFORE shuffling
+                // const formattedPool = finalPoolLetters.map(letter => formatLetter(letter));
+                // return shuffleArray(formattedPool);
+                 return shuffleArray(finalPoolLetters); // Shuffle uppercase letters
+            }
+
+            // --- Game Flow Functions ---
+            function startGame(theme) {
+                if (!themes[theme]) { console.error("Gai ez da aurkitu:", theme); return; }
+                currentWordList = shuffleArray([...themes[theme]]);
+                currentWordIndex = 0;
+                currentLevel = 1;
+                wordsCorrectThisLevel = 0;
+                levelIndicator.textContent = `Maila: ${currentLevel}`;
+                startScreen.style.display = 'none';
+                gameScreen.style.display = 'flex';
+                loadWord();
+                addTouchListeners();
+                applyOptions(); // Apply options when game starts
+            }
+
+            function showStartScreen(showCompletionMessage = false) {
+                gameScreen.style.display = 'none';
+                startScreen.style.display = 'flex';
+                feedbackMessage.textContent = showCompletionMessage ? "Gaia osatu duzu! Oso ondo!" : 'Arrastatu letrak kutxetara!';
+                feedbackMessage.className = showCompletionMessage ? 'feedback correct' : 'feedback';
+                removeTouchListeners();
+                 // If showing completion message, clear it after a delay
+                 if (showCompletionMessage) {
+                     setTimeout(() => {
+                         if (startScreen.style.display === 'flex') { // Check if still on start screen
+                            feedbackMessage.textContent = 'Aukeratu gai bat';
+                            feedbackMessage.className = 'feedback';
+                         }
+                     }, THEME_COMPLETE_DELAY_MS + 1000); // Clear after showing start screen
+                 }
+            }
+
+            function loadWord() {
+                 if (!currentWordList || currentWordList.length === 0) { console.error("Hitz-zerrenda baliogabea edo hutsa."); showStartScreen(); return; }
+
+                // Check if all words in the theme are completed
+                if (currentWordIndex >= currentWordList.length) {
+                    feedbackMessage.textContent = "Gaia osatu duzu! Oso ondo! 🎉"; // Final message
+                    feedbackMessage.className = 'feedback correct';
+                    wordBoxesContainer.innerHTML = '<span style="font-size: 40px;">🏆</span>';
+                    letterPoolContainer.innerHTML = '';
+                    emojiContainer.innerHTML = '';
+                    emojiContainer.style.display = 'none';
+                    // Go back to theme selection after a delay
+                    setTimeout(() => {
+                        showStartScreen(true); // Show start screen with completion message flag
+                    }, THEME_COMPLETE_DELAY_MS);
+                    return;
+                }
+
+                const wordData = currentWordList[currentWordIndex];
+                currentWord = wordData.word.toUpperCase(); // Internal logic uses uppercase
+                currentEmoji = wordData.emoji;
+                lettersInBoxes = Array(currentWord.length).fill(null);
+
+                emojiContainer.textContent = currentEmoji;
+                emojiContainer.setAttribute('aria-label', `${wordData.word} hitzarentzako emojia`);
+                emojiContainer.style.display = 'flex';
+
+                wordBoxesContainer.innerHTML = '';
+                letterPoolContainer.innerHTML = '';
+                feedbackMessage.textContent = 'Osatu hitza!';
+                feedbackMessage.className = 'feedback';
+
+                for (let i = 0; i < currentWord.length; i++) {
+                    const box = document.createElement('div');
+                    box.classList.add('word-box');
+                    box.dataset.index = i;
+                    box.addEventListener('dragover', handleDragOver);
+                    box.addEventListener('dragleave', handleDragLeave);
+                    box.addEventListener('drop', handleDrop);
+                    wordBoxesContainer.appendChild(box);
+                }
+
+                const pool = generateLetterPool(currentWord, currentLevel);
+                pool.forEach(letter => { // letter is uppercase here
+                    const tile = document.createElement('div');
+                    tile.classList.add('letter-tile');
+                    // Display formatted letter based on option
+                    tile.textContent = formatLetter(letter);
+                    tile.dataset.letter = letter; // Store original uppercase letter for checking
+                    tile.draggable = true;
+                    tile.addEventListener('dragstart', handleDragStart);
+                    tile.addEventListener('dragend', handleDragEnd);
+                    tile.addEventListener('touchstart', handleTouchStart, { passive: false });
+                    letterPoolContainer.appendChild(tile);
+                });
+                // Ensure font is applied correctly on load
+                 applyOptions();
+            }
+
+            function checkWordCompletion() {
+                if (lettersInBoxes.every(letter => letter !== null)) {
+                    wordsCorrectThisLevel++;
+                    wordBoxesContainer.childNodes.forEach(box => box.classList.add('filled'));
+
+                    let message = '';
+                    let delay = COMPLETION_DELAY_MS;
+                    let isLevelUp = false;
+
+                    if (wordsCorrectThisLevel >= WORDS_PER_LEVEL && currentWordIndex < currentWordList.length -1) { // Check if not the last word
+                        currentLevel++;
+                        wordsCorrectThisLevel = 0;
+                        levelIndicator.textContent = `Maila: ${currentLevel}`;
+                        // Level up message with icon
+                        message = `Zorionak! Hurrengo mailara pasa zara! (${currentLevel}. Maila) 🎉`;
+                        feedbackMessage.className = 'feedback level-up';
+                        wordBoxesContainer.childNodes.forEach(box => box.classList.add('level-up-flash'));
+                        delay = LEVEL_UP_DELAY_MS;
+                        isLevelUp = true;
+                    } else {
+                        // Correct word message with icon
+                        message = `Zuzen! "${currentWord.toLowerCase()}" da! ✅`;
+                        feedbackMessage.className = 'feedback correct';
+                    }
+
+                    feedbackMessage.textContent = message;
+
+                    setTimeout(() => {
+                       if (isLevelUp) {
+                           wordBoxesContainer.childNodes.forEach(box => box.classList.remove('level-up-flash'));
+                       }
+                       currentWordIndex++;
+                       loadWord(); // Load next word
+                    }, delay);
+                }
+            }
+
+            // --- Touch Event Handling (Logic mostly unchanged) ---
+             function addTouchListeners() { document.addEventListener('touchmove', handleTouchMove, { passive: false }); document.addEventListener('touchend', handleTouchEnd); }
+             function removeTouchListeners() { document.removeEventListener('touchmove', handleTouchMove); document.removeEventListener('touchend', handleTouchEnd); }
+             function handleTouchStart(event) { if (event.target.classList.contains('letter-tile')) { event.preventDefault(); draggedElement = event.target; const touch = event.changedTouches[0]; const rect = draggedElement.getBoundingClientRect(); offsetX = touch.clientX - rect.left; offsetY = touch.clientY - rect.top; createGhostElement(touch); draggedElement.classList.add('dragging'); } }
+             function handleTouchMove(event) { if (!draggedElement || !ghostElement) return; event.preventDefault(); const touch = event.changedTouches[0]; ghostElement.style.left = `${touch.clientX - offsetX}px`; ghostElement.style.top = `${touch.clientY - offsetY}px`; ghostElement.style.display = 'none'; const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY); ghostElement.style.display = ''; document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over')); if (elementBelow && elementBelow.classList.contains('word-box') && !elementBelow.textContent) { elementBelow.classList.add('drag-over'); } }
+             function handleTouchEnd(event) { if (!draggedElement) return; const touch = event.changedTouches[0]; let dropTarget = null; if (ghostElement) { ghostElement.style.display = 'none'; dropTarget = document.elementFromPoint(touch.clientX, touch.clientY); if (document.body.contains(ghostElement)) { document.body.removeChild(ghostElement); } ghostElement = null; } else { dropTarget = document.elementFromPoint(touch.clientX, touch.clientY); } document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over')); if (dropTarget && dropTarget.classList.contains('word-box') && !dropTarget.textContent) { const droppedLetter = draggedElement.dataset.letter; /* Use stored uppercase letter */ const boxIndex = parseInt(dropTarget.dataset.index, 10); processDrop(droppedLetter, boxIndex, dropTarget); } else { if(draggedElement) draggedElement.classList.remove('dragging'); } if (ghostElement === null && !(dropTarget && dropTarget.classList.contains('word-box') && !dropTarget.textContent)) { draggedElement = null; } }
+             function createGhostElement(touch) { if (ghostElement && document.body.contains(ghostElement)) { document.body.removeChild(ghostElement); } ghostElement = draggedElement.cloneNode(true); ghostElement.classList.add('touch-ghost'); ghostElement.style.position = 'absolute'; ghostElement.style.width = `${draggedElement.offsetWidth}px`; ghostElement.style.height = `${draggedElement.offsetHeight}px`; ghostElement.style.left = `${touch.clientX - offsetX}px`; ghostElement.style.top = `${touch.clientY - offsetY}px`; document.body.appendChild(ghostElement); }
+
+            // --- Drag and Drop Event Handling (Mouse) ---
+            function handleDragStart(event) {
+                draggedElement = event.target;
+                // Store the original uppercase letter for checking
+                event.dataTransfer.setData('text/plain', event.target.dataset.letter);
+                event.dataTransfer.effectAllowed = 'move';
+                setTimeout(() => { if(draggedElement) draggedElement.classList.add('dragging'); }, 0);
+             }
+            function handleDragEnd(event) { if (draggedElement) { draggedElement.classList.remove('dragging'); } draggedElement = null; document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over')); }
+            function handleDragOver(event) { event.preventDefault(); event.dataTransfer.dropEffect = 'move'; if (event.target.classList.contains('word-box') && !event.target.textContent) { event.target.classList.add('drag-over'); } }
+            function handleDragLeave(event) { if (event.target.classList.contains('word-box')) { event.target.classList.remove('drag-over'); } }
+            function handleDrop(event) {
+                event.preventDefault();
+                 if (event.target.classList.contains('drag-over')) { event.target.classList.remove('drag-over'); }
+                const targetBox = event.target;
+                if (!targetBox.classList.contains('word-box') || targetBox.textContent !== '') { return; }
+                const droppedLetter = event.dataTransfer.getData('text/plain'); // This is uppercase
+                const boxIndex = parseInt(targetBox.dataset.index, 10);
+                processDrop(droppedLetter, boxIndex, targetBox);
+             }
+
+            // --- Common Drop Processing Logic ---
+            function processDrop(droppedLetter, boxIndex, targetBox) { // droppedLetter is uppercase
+                const originalDraggedElement = draggedElement;
+                // Compare uppercase target letter with uppercase dropped letter
+                if (currentWord[boxIndex] === droppedLetter) {
+                    // Display formatted letter in the box
+                    targetBox.textContent = formatLetter(droppedLetter);
+                    lettersInBoxes[boxIndex] = droppedLetter; // Store uppercase letter
+                    targetBox.classList.add('correct-flash');
+                    setTimeout(() => targetBox.classList.remove('correct-flash'), 500);
+                    if (originalDraggedElement && letterPoolContainer.contains(originalDraggedElement)) {
+                        letterPoolContainer.removeChild(originalDraggedElement);
+                    }
+                    if (draggedElement === originalDraggedElement) { draggedElement = null; }
+                    checkWordCompletion();
+                } else {
+                    targetBox.classList.add('incorrect-flash');
+                    setTimeout(() => targetBox.classList.remove('incorrect-flash'), 500);
+                    if(originalDraggedElement) originalDraggedElement.classList.remove('dragging');
+                    if (draggedElement === originalDraggedElement) { draggedElement = null; }
+                }
+            }
+
+            // --- Options Modal Logic ---
+            function openOptionsModal() { optionsModal.style.display = 'flex'; }
+            function closeOptionsModal() { optionsModal.style.display = 'none'; }
+
+            optionsButton.addEventListener('click', openOptionsModal);
+            modalCloseButton.addEventListener('click', closeOptionsModal);
+            // Close modal if clicking outside the content
+            optionsModal.addEventListener('click', (event) => {
+                if (event.target === optionsModal) {
+                    closeOptionsModal();
+                }
+            });
+
+            // Handle Font Change
+            fontStyleSelect.addEventListener('change', (event) => {
+                fontStyleOption = event.target.value;
+                applyOptions();
+            });
+
+            // Handle Case Change
+            letterCaseRadios.forEach(radio => {
+                radio.addEventListener('change', (event) => {
+                    if (event.target.checked) {
+                        letterCaseOption = event.target.value;
+                        applyOptions();
+                    }
+                });
+            });
+
+            // --- Initial Setup ---
+            themeButtonsContainer.addEventListener('click', (event) => { const button = event.target.closest('.theme-button'); if (button) { startGame(button.dataset.theme); } });
+            backButton.addEventListener('click', () => showStartScreen(false)); // Go back without completion message
+            showStartScreen(); // Show start screen initially
+            applyOptions(); // Apply default options on load
+
+        });
+    </script>
+</body>
+</html>
