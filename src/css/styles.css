@@ -1,3 +1,50 @@
+/* Consonant + Vowel Game Styles */
+#consonant-vowel-select-screen .cv-consonant-button {
+    background: var(--box-bg);
+    border: 2px solid var(--border-color-light);
+    border-radius: var(--border-radius);
+    padding: 10px 18px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--accent-color);
+    cursor: pointer;
+    margin: 4px;
+    min-width: 60px;
+    transition: background 0.2s, border-color 0.2s;
+}
+#consonant-vowel-select-screen .cv-consonant-button:hover {
+    background: var(--accent-color);
+    color: #fff;
+}
+#consonant-vowel-game-screen .cv-word-button {
+    background: var(--box-bg);
+    border: 2px solid var(--border-color-light);
+    border-radius: var(--border-radius);
+    padding: 10px 18px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: var(--accent-color);
+    cursor: pointer;
+    margin: 4px;
+    min-width: 90px;
+    transition: background 0.2s, border-color 0.2s;
+}
+#consonant-vowel-game-screen .cv-word-button.correct {
+    background: var(--correct-flash-bg);
+    border-color: var(--accent-color);
+    color: var(--feedback-correct);
+}
+#consonant-vowel-game-screen .cv-word-button.incorrect {
+    background: var(--incorrect-flash-bg);
+    border-color: var(--feedback-incorrect);
+    color: var(--feedback-incorrect);
+}
+#consonant-vowel-game-screen .feedback {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin: 12px 0;
+    color: var(--accent-color);
+}
 /* Vowel Sort Game Styles */
 #vowel-sort-game-screen .game-content-area {
     background-color: var(--container-bg);
@@ -297,6 +344,16 @@ h2 { color: var(--accent-color); margin-bottom: 25px; text-align: center; }
   transition: background-color 0.2s ease;
   border-bottom: 3px solid #a0d2d0;
   line-height: 1;
+  cursor: pointer;
+}
+
+.maila-button:hover {
+  background-color: #00695c;
+  transform: translateY(-2px);
+}
+
+.maila-button:active {
+  transform: translateY(0);
 }
 
 

@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (App.syllableGame && typeof App.syllableGame.init === 'function') App.syllableGame.init();
   if (App.syllableSortGame && typeof App.syllableSortGame.init === 'function') App.syllableSortGame.init();
   if (App.numberGame && typeof App.numberGame.init === 'function') App.numberGame.init();
+  if (App.consonantVowelGame && typeof App.consonantVowelGame.init === 'function') App.consonantVowelGame.init();
 
   // 2) Cableado de navegación y botones
   const gameSelectButtons = document.querySelectorAll('.game-select-button');
@@ -39,6 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (gameType === 'vowelSortGame') {
         if (App.vowelSortGame && typeof App.vowelSortGame.start === 'function') {
           App.vowelSortGame.start();
+        }
+      } else if (gameType === 'consonantVowelGame') {
+        if (App.consonantVowelGame && typeof App.consonantVowelGame.start === 'function') {
+          App.consonantVowelGame.start();
         }
       } else if (gameType === 'vowelGame') {
         if (App.vowelGame && typeof App.vowelGame.start === 'function') {

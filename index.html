@@ -30,6 +30,10 @@
                 <span class="emoji-icon">🅰️</span>
                 <span>Vokalak Sailkatu</span>
             </button>
+            <button class="game-select-button" data-game="consonantVowelGame">
+                <span class="emoji-icon">🔤</span>
+                <span>Konsonante + Vokal</span>
+            </button>
             <button class="game-select-button" data-game="vowelGame">
                 <span class="emoji-icon">🅰️</span>
                 <span>Vokalak</span>
@@ -40,6 +44,37 @@
             </button>
         </div>
     </div>
+
+    <div id="consonant-vowel-select-screen" class="screen">
+        <div class="controls-container" style="position: static; justify-content: space-between;">
+            <button id="cv-back-button" class="back-button">⬅ Atzera</button>
+        </div>
+        <h2>Aukeratu konsonante bat</h2>
+        <div id="cv-consonant-buttons" style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-bottom:18px;">
+            <button class="cv-consonant-button" data-consonant="P">P</button>
+            <button class="cv-consonant-button" data-consonant="M">M</button>
+            <button class="cv-consonant-button" data-consonant="K">K</button>
+            <button class="cv-consonant-button" data-consonant="L">L</button>
+            <button class="cv-consonant-button" data-consonant="D">D</button>
+            <button class="cv-consonant-button" data-consonant="B">B</button>
+            <button class="cv-consonant-button" data-consonant="S">S</button>
+            <button class="cv-consonant-button" data-consonant="G">G</button>
+            <button class="cv-consonant-button" data-consonant="T">T</button>
+        </div>
+    </div>
+
+    <div id="consonant-vowel-game-screen" class="screen">
+        <div class="controls-container" style="position: static; justify-content: space-between;">
+            <button id="cv-game-back-button" class="back-button">⬅ Atzera</button>
+        </div>
+        <div class="game-content-area">
+            <h2 id="cv-combo-title">Konbinazioa</h2>
+            <div id="cv-word-list" style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-bottom:18px;"></div>
+            <div id="cv-feedback" class="feedback"></div>
+            <button id="cv-next-button" class="maila-button" style="display:none; margin-top:18px;">Hurrengoa</button>
+        </div>
+    </div>
+
 
     <div id="vowel-sort-game-screen" class="screen">
         <div class="controls-container" style="position: static; justify-content: space-between;">
@@ -163,6 +198,7 @@
     <script src="src/js/syllableSortGame.js"></script>
     <script src="src/js/numberGame.js"></script>
     <script src="src/js/vowelSortGame.js"></script>
+    <script src="src/js/consonantVowelGame.js"></script>
     <script src="src/js/vowelGame.js"></script>
     <script src="src/js/app.js"></script>
 </body>

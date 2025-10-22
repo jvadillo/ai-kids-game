@@ -12,9 +12,11 @@
     els.wordGame = document.getElementById('word-game-screen');
     els.syllableGame = document.getElementById('syllable-game-screen');
     els.syllableSortGame = document.getElementById('syllable-sort-game-screen');
-  els.vowelSortGame = document.getElementById('vowel-sort-game-screen');
-  els.vowelGame = document.getElementById('vowel-game-screen');
-  els.numberGame = document.getElementById('number-game-screen');
+    els.vowelSortGame = document.getElementById('vowel-sort-game-screen');
+    els.vowelGame = document.getElementById('vowel-game-screen');
+    els.numberGame = document.getElementById('number-game-screen');
+    els.consonantVowelSelect = document.getElementById('consonant-vowel-select-screen');
+    els.consonantVowelGame = document.getElementById('consonant-vowel-game-screen');
   }
 
   // Muestra una pantalla y oculta el resto; reaplica opciones de estilo
@@ -29,8 +31,12 @@
     // Ocultar UIs de juego
     els.wordGame.style.display = 'none';
     els.syllableGame.style.display = 'none';
-  els.numberGame.style.display = 'none';
-  if (els.syllableSortGame) els.syllableSortGame.style.display = 'none';
+    els.numberGame.style.display = 'none';
+    if (els.syllableSortGame) els.syllableSortGame.style.display = 'none';
+    if (els.vowelSortGame) els.vowelSortGame.style.display = 'none';
+    if (els.vowelGame) els.vowelGame.style.display = 'none';
+    if (els.consonantVowelSelect) els.consonantVowelSelect.style.display = 'none';
+    if (els.consonantVowelGame) els.consonantVowelGame.style.display = 'none';
 
     // Mostrar la solicitada
     if (screenToShow === 'gameSelection') {
@@ -51,10 +57,10 @@
       if (els.vowelGame) els.vowelGame.style.display = 'flex';
     } else if (screenToShow === 'numberGame') {
       els.numberGame.style.display = 'flex';
-    }
-    // Ocultar pantalla de Vokalak si no está activa
-    if (screenToShow !== 'vowelGame' && els.vowelGame) {
-      els.vowelGame.style.display = 'none';
+    } else if (screenToShow === 'consonantVowelSelect') {
+      if (els.consonantVowelSelect) els.consonantVowelSelect.style.display = 'flex';
+    } else if (screenToShow === 'consonantVowelGame') {
+      if (els.consonantVowelGame) els.consonantVowelGame.style.display = 'flex';
     }
 
     // Reaplicar estilo (tipo de letra, mayúsculas/minúsculas)
