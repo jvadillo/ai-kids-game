@@ -36,6 +36,10 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (gameType === 'syllableSort') {
         currentThemeTarget = 'syllableSort';
         App.screens.showScreen('wordThemeSelection');
+      } else if (gameType === 'vowelSortGame') {
+        if (App.vowelSortGame && typeof App.vowelSortGame.start === 'function') {
+          App.vowelSortGame.start();
+        }
       } else if (gameType === 'vowelGame') {
         if (App.vowelGame && typeof App.vowelGame.start === 'function') {
           App.vowelGame.start();

@@ -1,3 +1,106 @@
+/* Vowel Sort Game Styles */
+#vowel-sort-game-screen .game-content-area {
+    background-color: var(--container-bg);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+}
+.vs-item {
+    background: var(--box-bg);
+    border: 2px solid var(--border-color-light);
+    border-radius: var(--border-radius);
+    padding: 10px 18px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: var(--accent-color);
+    cursor: grab;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin: 4px;
+    min-width: 90px;
+    transition: background 0.2s, border-color 0.2s;
+}
+.vs-item.dragging {
+    opacity: 0.6;
+    cursor: grabbing;
+}
+.vs-item.vs-correct {
+    background: var(--correct-flash-bg);
+    border-color: var(--accent-color);
+    color: var(--feedback-correct);
+}
+.vs-item.vs-incorrect {
+    background: var(--incorrect-flash-bg);
+    border-color: var(--feedback-incorrect);
+    color: var(--feedback-incorrect);
+}
+.vs-emoji {
+    font-size: 2em;
+    line-height: 1;
+}
+.vs-word {
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+#vs-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 15px 0 20px;
+    width: 100%;
+}
+#vs-dropzones {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    width: 100%;
+}
+.vs-zone {
+    min-height: 110px;
+    border: 3px dashed var(--zone-border);
+    background: var(--zone-bg);
+    border-radius: var(--border-radius);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    transition: background-color 0.2s, transform 0.1s;
+}
+.vs-zone.over {
+    background: #e8fffb;
+    transform: scale(1.01);
+}
+.vs-zone .vs-zone-label {
+    font-weight: bold;
+    color: var(--accent-color);
+    margin-bottom: 8px;
+    font-size: 1.3em;
+}
+.vs-zone.zone-correct {
+    box-shadow: 0 0 0 3px var(--correct-flash-bg) inset;
+}
+.vs-zone.zone-incorrect {
+    box-shadow: 0 0 0 3px var(--incorrect-flash-bg) inset;
+}
+#vs-feedback {
+    margin-top: 15px;
+    font-size: 1.1em;
+    font-weight: bold;
+    min-height: 30px;
+    color: var(--feedback-info);
+    text-align: center;
+}
 /* Vowel Game Styles */
 #vowel-game-screen .game-content-area {
     background-color: var(--container-bg);

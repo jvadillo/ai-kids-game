@@ -13,6 +13,7 @@
     <div id="game-selection-screen" class="screen active">
         <h2>Aukeratu joko bat</h2>
         <div id="game-selection-buttons">
+
             <button class="game-select-button" data-game="words">
                 <span class="emoji-icon">🔠</span>
                 <span>Hitzak</span>
@@ -25,6 +26,10 @@
                 <span class="emoji-icon">🧩</span>
                 <span>Silabak Sailkatu</span>
             </button>
+            <button class="game-select-button" data-game="vowelSortGame">
+                <span class="emoji-icon">🅰️</span>
+                <span>Vokalak Sailkatu</span>
+            </button>
             <button class="game-select-button" data-game="vowelGame">
                 <span class="emoji-icon">🅰️</span>
                 <span>Vokalak</span>
@@ -33,6 +38,18 @@
                  <span class="emoji-icon">🧮</span>
                  <span>Zenbakiak</span>
             </button>
+        </div>
+    </div>
+
+    <div id="vowel-sort-game-screen" class="screen">
+        <div class="controls-container" style="position: static; justify-content: space-between;">
+            <button id="vowel-sort-back-button" class="back-button">⬅ Atzera</button>
+        </div>
+        <div class="game-content-area">
+            <h2>Vokalak Sailkatu</h2>
+            <div id="vs-items"></div>
+            <div id="vs-dropzones"></div>
+            <div id="vs-feedback" class="feedback">Arrastatu hitzak vokal egokira.</div>
         </div>
     </div>
 
@@ -145,6 +162,7 @@
     <script src="src/js/syllableGame.js"></script>
     <script src="src/js/syllableSortGame.js"></script>
     <script src="src/js/numberGame.js"></script>
+    <script src="src/js/vowelSortGame.js"></script>
     <script src="src/js/vowelGame.js"></script>
     <script src="src/js/app.js"></script>
 </body>

@@ -12,6 +12,7 @@
     els.wordGame = document.getElementById('word-game-screen');
     els.syllableGame = document.getElementById('syllable-game-screen');
     els.syllableSortGame = document.getElementById('syllable-sort-game-screen');
+  els.vowelSortGame = document.getElementById('vowel-sort-game-screen');
   els.vowelGame = document.getElementById('vowel-game-screen');
   els.numberGame = document.getElementById('number-game-screen');
   }
@@ -44,6 +45,8 @@
       els.syllableGame.style.display = 'flex';
     } else if (screenToShow === 'syllableSortGame') {
       if (els.syllableSortGame) els.syllableSortGame.style.display = 'flex';
+    } else if (screenToShow === 'vowelSortGame') {
+      if (els.vowelSortGame) els.vowelSortGame.style.display = 'flex';
     } else if (screenToShow === 'vowelGame') {
       if (els.vowelGame) els.vowelGame.style.display = 'flex';
     } else if (screenToShow === 'numberGame') {
