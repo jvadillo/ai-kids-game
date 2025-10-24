@@ -37,6 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (gameType === 'syllableSort') {
         currentThemeTarget = 'syllableSort';
         App.screens.showScreen('wordThemeSelection');
+      } else if (gameType === 'emojiSyllableGame') {
+        currentThemeTarget = 'emojiSyllableGame';
+        App.screens.showScreen('wordThemeSelection');
       } else if (gameType === 'vowelSortGame') {
         if (App.vowelSortGame && typeof App.vowelSortGame.start === 'function') {
           App.vowelSortGame.start();
@@ -65,6 +68,8 @@ document.addEventListener('DOMContentLoaded', () => {
         App.syllableGame.startSyllableGame(theme);
       } else if (currentThemeTarget === 'syllableSort') {
         App.syllableSortGame.start(theme);
+      } else if (currentThemeTarget === 'emojiSyllableGame') {
+        App.emojiSyllableGame.startEmojiSyllableGame(theme);
       } else {
         App.wordGame.startWordGame(theme);
       }

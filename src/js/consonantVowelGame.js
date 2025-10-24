@@ -74,13 +74,13 @@
         { word: 'pelikula', emoji: '📽️' },
         { word: 'piano', emoji: '🎹' }, { word: 'pilota', emoji: '⚽' }, { word: 'pirata', emoji: '🏴‍☠️' },
         { word: 'poltsa', emoji: '👜' }, { word: 'pottoka', emoji: '🐴' }, { word: 'pozik', emoji: '😃' },
-        { word: 'puzle', emoji: '🧩' }, { word: 'puntu', emoji: '🔵' }, { word: 'puma', emoji: '😃' },
+        { word: 'puzle', emoji: '🧩' }, { word: 'puntu', emoji: '🔵' }, { word: 'puma', emoji: '🐅' },
         // M
-        { word: 'mama', emoji: '👩' }, { word: 'manta', emoji: '🧣' }, { word: 'mapa', emoji: '🗺️' },
-        { word: 'merkatari', emoji: '🛒' }, { word: 'merke', emoji: '💸' }, { word: 'mendi', emoji: '⛰️' },
-        { word: 'minutu', emoji: '⏱️' }, { word: 'miru', emoji: '🦅' }, { word: 'mila', emoji: '1️⃣' },
-        { word: 'moko', emoji: '🦤' }, { word: 'motxila', emoji: '🎒' }, { word: 'mota', emoji: '🏍️' },
-        { word: 'mutil', emoji: '👦' }, { word: 'mundu', emoji: '🌍' }, { word: 'museo', emoji: '🏛️' },
+        { word: 'madari', emoji: '🍐' }, { word: 'manta', emoji: '🧣' }, { word: 'mapa', emoji: '🗺️' }, { word: 'maleta', emoji: '🧳' }
+        { word: 'mediku', emoji: '👩‍⚕️' }, { word: 'meloi', emoji: '🍈' }, { word: 'mendi', emoji: '⛰️' },
+        { word: 'mihia', emoji: '👅' },
+        { word: 'moskito', emoji: '🦟' }, { word: 'motxila', emoji: '🎒' }, { word: 'motorra', emoji: '🛵' },
+        { word: 'mutil', emoji: '👦' }, { word: 'mundu', emoji: '🌍' }, { word: 'museo', emoji: '🏛️' }, { word: 'musu', emoji: '😘' }, { word: 'musika', emoji: '🎶' },
         // K
         { word: 'katu', emoji: '🐱' }, { word: 'kaxa', emoji: '📦' }, { word: 'kaleko', emoji: '🚶' },
         { word: 'keru', emoji: '💨' }, { word: 'keta', emoji: '🧀' }, { word: 'keinu', emoji: '�' },
