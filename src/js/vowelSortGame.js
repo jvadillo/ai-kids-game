@@ -43,8 +43,8 @@
         { word: 'ahate', emoji: '🦆' }, { word: 'arkatz', emoji: '✏️' }, { word: 'arrain', emoji: '🐠' },
         { word: 'eskola', emoji: '🏫' }, { word: 'elur', emoji: '❄️' },
         { word: 'igel', emoji: '🐸' }, { word: 'ilargi', emoji: '🌙' },
-        { word: 'ogi', emoji: '🍞' }, { word: 'orratz', emoji: '🪡' },
-        { word: 'ugaztun', emoji: '🦣' }, { word: 'urdin', emoji: '💙' }
+        { word: 'ogi', emoji: '🍞' }, { word: 'otso', emoji: '🐺' },
+        { word: 'untxia', emoji: '🐇' }, { word: 'urdin', emoji: '💙' }
       ];
     }
     return words;

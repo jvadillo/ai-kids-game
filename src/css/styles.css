@@ -731,3 +731,138 @@ h2 { color: var(--accent-color); margin-bottom: 25px; text-align: center; }
      .syllable-number { font-size: 1.1em; }
      #syllable-word-name { font-size: 1.1em; letter-spacing: 1px; }
  }
+
+/* Emoji Vowel Match Game Styles */
+.evm-emoji-tile {
+    width: 70px;
+    height: 70px;
+    background-color: var(--tile-bg);
+    border: 2px solid #ffa726;
+    border-bottom: 4px solid var(--tile-border);
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5em;
+    cursor: grab;
+    transition: transform 0.2s, box-shadow 0.2s;
+    touch-action: none;
+    user-select: none;
+}
+
+.evm-emoji-tile:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.evm-emoji-tile.dragging {
+    opacity: 0.5;
+    cursor: grabbing;
+}
+
+.evm-vowel-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.evm-vowel-label {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: var(--accent-color);
+    padding: 5px 15px;
+    background-color: var(--box-bg);
+    border: 2px solid var(--border-color-light);
+    border-radius: var(--border-radius);
+}
+
+.evm-drop-area {
+    width: 80px;
+    height: 80px;
+    background-color: var(--zone-bg);
+    border: 3px dashed var(--zone-border);
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, border-style 0.2s, transform 0.2s;
+}
+
+.evm-drop-area.drag-over {
+    background-color: #e0f7fa;
+    border-style: solid;
+    transform: scale(1.05);
+}
+
+.evm-drop-area.evm-correct {
+    background-color: var(--correct-flash-bg);
+    border-color: var(--feedback-correct);
+    border-style: solid;
+}
+
+.evm-drop-area.evm-incorrect {
+    background-color: var(--incorrect-flash-bg);
+    border-color: var(--feedback-incorrect);
+    border-style: solid;
+}
+
+.evm-dropped-emoji {
+    font-size: 2.5em;
+    animation: dropIn 0.3s ease;
+}
+
+@keyframes dropIn {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 480px) {
+    .evm-emoji-tile {
+        width: 60px;
+        height: 60px;
+        font-size: 2em;
+    }
+    
+    .evm-vowel-label {
+        font-size: 1.5em;
+        padding: 4px 12px;
+    }
+    
+    .evm-drop-area {
+        width: 65px;
+        height: 65px;
+    }
+    
+    .evm-dropped-emoji {
+        font-size: 2em;
+    }
+}
+
+@media (max-width: 360px) {
+    .evm-emoji-tile {
+        width: 50px;
+        height: 50px;
+        font-size: 1.8em;
+    }
+    
+    .evm-vowel-label {
+        font-size: 1.3em;
+        padding: 3px 10px;
+    }
+    
+    .evm-drop-area {
+        width: 55px;
+        height: 55px;
+    }
+    
+    .evm-dropped-emoji {
+        font-size: 1.8em;
+    }
+}

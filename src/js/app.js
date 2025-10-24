@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
   gameSelectButtons.forEach(button => {
     button.addEventListener('click', () => {
       const gameType = button.dataset.game;
+      console.log('[app.js] Game button clicked, gameType:', gameType);
       if (gameType === 'words') {
         currentThemeTarget = 'words';
         App.screens.showScreen('wordThemeSelection');
@@ -45,12 +46,21 @@ document.addEventListener('DOMContentLoaded', () => {
           App.vowelSortGame.start();
         }
       } else if (gameType === 'consonantVowelGame') {
+        console.log('[app.js] consonantVowelGame button clicked');
+        console.log('[app.js] App.consonantVowelGame:', App.consonantVowelGame);
         if (App.consonantVowelGame && typeof App.consonantVowelGame.start === 'function') {
+          console.log('[app.js] Calling App.consonantVowelGame.start()');
           App.consonantVowelGame.start();
+        } else {
+          console.error('[app.js] App.consonantVowelGame.start is not available');
         }
       } else if (gameType === 'vowelGame') {
         if (App.vowelGame && typeof App.vowelGame.start === 'function') {
           App.vowelGame.start();
+        }
+      } else if (gameType === 'emojiVowelMatchGame') {
+        if (App.emojiVowelMatchGame && typeof App.emojiVowelMatchGame.start === 'function') {
+          App.emojiVowelMatchGame.start();
         }
       } else if (gameType === 'numbers') {
         App.numberGame.startNumberGame();

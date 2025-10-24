@@ -17,26 +17,23 @@
     els.numberGame = document.getElementById('number-game-screen');
     els.consonantVowelSelect = document.getElementById('consonant-vowel-select-screen');
     els.consonantVowelGame = document.getElementById('consonant-vowel-game-screen');
+    els.emojiVowelMatchGame = document.getElementById('emoji-vowel-match-screen');
   }
 
   // Muestra una pantalla y oculta el resto; reaplica opciones de estilo
   function showScreen(screenToShow) {
     if (!els.gameSelection) init();
 
-    // Ocultar pantallas principales
-    els.gameSelection.classList.remove('active');
-    els.wordTheme.classList.remove('active');
-    els.syllableTheme.classList.remove('active');
+    // Ocultar todas las pantallas con clase 'screen'
+    document.querySelectorAll('.screen').forEach(screen => {
+      screen.classList.remove('active');
+    });
 
-    // Ocultar UIs de juego
-    els.wordGame.style.display = 'none';
-    els.syllableGame.style.display = 'none';
-    els.numberGame.style.display = 'none';
+    // Ocultar UIs de juego que no usan clase 'screen'
+    if (els.wordGame) els.wordGame.style.display = 'none';
+    if (els.syllableGame) els.syllableGame.style.display = 'none';
+    if (els.numberGame) els.numberGame.style.display = 'none';
     if (els.syllableSortGame) els.syllableSortGame.style.display = 'none';
-    if (els.vowelSortGame) els.vowelSortGame.style.display = 'none';
-    if (els.vowelGame) els.vowelGame.style.display = 'none';
-    if (els.consonantVowelSelect) els.consonantVowelSelect.style.display = 'none';
-    if (els.consonantVowelGame) els.consonantVowelGame.style.display = 'none';
 
     // Mostrar la solicitada
     if (screenToShow === 'gameSelection') {
@@ -46,21 +43,25 @@
     } else if (screenToShow === 'syllableThemeSelection') {
       els.syllableTheme.classList.add('active');
     } else if (screenToShow === 'wordGame') {
-      els.wordGame.style.display = 'flex';
+      if (els.wordGame) els.wordGame.style.display = 'flex';
     } else if (screenToShow === 'syllableGame') {
-      els.syllableGame.style.display = 'flex';
+      if (els.syllableGame) els.syllableGame.style.display = 'flex';
     } else if (screenToShow === 'syllableSortGame') {
       if (els.syllableSortGame) els.syllableSortGame.style.display = 'flex';
     } else if (screenToShow === 'vowelSortGame') {
-      if (els.vowelSortGame) els.vowelSortGame.style.display = 'flex';
+      if (els.vowelSortGame) els.vowelSortGame.classList.add('active');
     } else if (screenToShow === 'vowelGame') {
-      if (els.vowelGame) els.vowelGame.style.display = 'flex';
+      if (els.vowelGame) els.vowelGame.classList.add('active');
     } else if (screenToShow === 'numberGame') {
-      els.numberGame.style.display = 'flex';
+      if (els.numberGame) els.numberGame.style.display = 'flex';
     } else if (screenToShow === 'consonantVowelSelect') {
-      if (els.consonantVowelSelect) els.consonantVowelSelect.style.display = 'flex';
+      console.log('[screens] Showing consonantVowelSelect, element:', els.consonantVowelSelect);
+      if (els.consonantVowelSelect) els.consonantVowelSelect.classList.add('active');
     } else if (screenToShow === 'consonantVowelGame') {
-      if (els.consonantVowelGame) els.consonantVowelGame.style.display = 'flex';
+      console.log('[screens] Showing consonantVowelGame, element:', els.consonantVowelGame);
+      if (els.consonantVowelGame) els.consonantVowelGame.classList.add('active');
+    } else if (screenToShow === 'emojiVowelMatch') {
+      if (els.emojiVowelMatchGame) els.emojiVowelMatchGame.classList.add('active');
     }
 
     // Reaplicar estilo (tipo de letra, mayúsculas/minúsculas)

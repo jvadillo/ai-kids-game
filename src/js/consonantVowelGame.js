@@ -1,6 +1,9 @@
+// consonantVowelGame.js: Módulo de combinación consonante + vocal
 (function(window) {
+  console.log('[consonantVowelGame.js] cargado');
   // Juego de combinación consonante + vocal
-  const App = window.App = window.App || {};
+  window.App = window.App || {};
+  const App = window.App;
   const VOWELS = ['A', 'E', 'I', 'O', 'U'];
   const CONSONANTS = ['P', 'M', 'K', 'L', 'D', 'B', 'S', 'G', 'T'];
   const ITEMS_PER_ROUND = 6;
@@ -47,8 +50,13 @@
   }
 
   function start() {
+    console.log('[consonantVowelGame] start() called');
     if (!els.selectScreen) init();
+    currentVowelIndex = 0;
+    currentConsonant = null;
+    console.log('[consonantVowelGame] Calling showScreen with consonantVowelSelect');
     App.screens.showScreen('consonantVowelSelect');
+    console.log('[consonantVowelGame] Screen should now be visible');
   }
 
   function startGame(consonant) {
@@ -76,7 +84,7 @@
         { word: 'poltsa', emoji: '👜' }, { word: 'pottoka', emoji: '🐴' }, { word: 'pozik', emoji: '😃' },
         { word: 'puzle', emoji: '🧩' }, { word: 'puntu', emoji: '🔵' }, { word: 'puma', emoji: '🐅' },
         // M
-        { word: 'madari', emoji: '🍐' }, { word: 'manta', emoji: '🧣' }, { word: 'mapa', emoji: '🗺️' }, { word: 'maleta', emoji: '🧳' }
+  { word: 'madari', emoji: '🍐' }, { word: 'manta', emoji: '🧣' }, { word: 'mapa', emoji: '🗺️' }, { word: 'maleta', emoji: '🧳' },
         { word: 'mediku', emoji: '👩‍⚕️' }, { word: 'meloi', emoji: '🍈' }, { word: 'mendi', emoji: '⛰️' },
         { word: 'mihia', emoji: '👅' },
         { word: 'moskito', emoji: '🦟' }, { word: 'motxila', emoji: '🎒' }, { word: 'motorra', emoji: '🛵' },
@@ -175,4 +183,5 @@
   }
 
   App.consonantVowelGame = { init, start };
+  console.log('[consonantVowelGame.js] App.consonantVowelGame asignado:', App.consonantVowelGame);
 })(window);
