@@ -1,5 +1,54 @@
 // app.js: Orquestador principal. Inicializa módulos y cablea la navegación.
 
+// PWA Install Prompt
+let deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  showInstallBanner();
+});
+
+function showInstallBanner() {
+  // Don't show if already installed or dismissed recently
+  if (window.matchMedia('(display-mode: standalone)').matches) return;
+  if (localStorage.getItem('pwaInstallDismissed')) {
+    const dismissedTime = parseInt(localStorage.getItem('pwaInstallDismissed'), 10);
+    // Don't show again for 7 days after dismissing
+    if (Date.now() - dismissedTime < 7 * 24 * 60 * 60 * 1000) return;
+  }
+  
+  const banner = document.getElementById('pwa-install-banner');
+  if (banner) {
+    banner.classList.add('show');
+  }
+}
+
+function installPWA() {
+  const banner = document.getElementById('pwa-install-banner');
+  if (banner) banner.classList.remove('show');
+  
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('PWA installed');
+      }
+      deferredPrompt = null;
+    });
+  }
+}
+
+function dismissInstallBanner() {
+  const banner = document.getElementById('pwa-install-banner');
+  if (banner) banner.classList.remove('show');
+  localStorage.setItem('pwaInstallDismissed', Date.now().toString());
+}
+
+// Expose functions globally
+window.installPWA = installPWA;
+window.dismissInstallBanner = dismissInstallBanner;
+
 document.addEventListener('DOMContentLoaded', () => {
   // 1) Inicializar módulos (cacheo DOM, estado y listeners internos)
   window.App = window.App || {};

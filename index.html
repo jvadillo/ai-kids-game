@@ -23,6 +23,19 @@
     <link rel="stylesheet" href="src/css/styles.css">
 </head>
 <body>
+    <!-- PWA Install Banner -->
+    <div id="pwa-install-banner" class="pwa-banner">
+        <div class="pwa-banner-content">
+            <span class="pwa-banner-icon">📱</span>
+            <div class="pwa-banner-text">
+                <strong>Instalatu aplikazioa!</strong>
+                <span>Gehitu pantaila nagusira</span>
+            </div>
+            <button onclick="installPWA()" class="pwa-install-btn">Instalatu</button>
+            <button onclick="dismissInstallBanner()" class="pwa-dismiss-btn">✕</button>
+        </div>
+    </div>
+
     <h1>Hitzak eta Zenbakiak Ikasten</h1>
 
     <div id="game-selection-screen" class="screen active">
