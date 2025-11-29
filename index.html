@@ -2,8 +2,23 @@
 <html lang="eu">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Hitzak eta Zenbakiak Ikasten</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- iOS PWA fullscreen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Theme color -->
+    <meta name="theme-color" content="#673ab7">
+    
+    <!-- Icons -->
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="src/css/styles.css">
 </head>
@@ -230,5 +245,12 @@
     <script src="src/js/emojiSyllableGame.js"></script>
     <script src="src/js/emojiVowelMatchGame.js"></script>
     <script src="src/js/app.js"></script>
+    
+    <!-- Register Service Worker -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js');
+      }
+    </script>
 </body>
 </html>

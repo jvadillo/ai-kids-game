@@ -1,0 +1,52 @@
+export type ThemeKey = 'animaliak'|'eskola'|'arropa'|'koloreak'|'parkea'|'janaria'
+export interface Theme { key: ThemeKey; name: string }
+export interface WordEntry { id: number; themeKey: ThemeKey; word: string; emoji: string; syllablesCount: number; syllableParts?: string[] }
+
+export const themes: Theme[] = [
+  { key: 'animaliak', name: 'Animaliak' },
+  { key: 'eskola', name: 'Eskola' },
+  { key: 'arropa', name: 'Arropa' },
+  { key: 'koloreak', name: 'Koloreak' },
+  { key: 'parkea', name: 'Parkea' },
+  { key: 'janaria', name: 'Janaria' }
+]
+
+export const words: WordEntry[] = [
+  { id: 1,  themeKey: 'animaliak', word: 'katu',   emoji: '🐱', syllablesCount: 2, syllableParts: ['KA','TU'] },
+  { id: 2,  themeKey: 'animaliak', word: 'txakur', emoji: '🐶', syllablesCount: 2, syllableParts: ['TXA','KUR'] },
+  { id: 3,  themeKey: 'animaliak', word: 'arrain', emoji: '🐠', syllablesCount: 2, syllableParts: ['AR','RAIN'] },
+  { id: 4,  themeKey: 'animaliak', word: 'ahate',  emoji: '🦆', syllablesCount: 3, syllableParts: ['A','HA','TE'] },
+  { id: 5,  themeKey: 'animaliak', word: 'behi',   emoji: '🐄', syllablesCount: 2, syllableParts: ['BE','HI'] },
+  { id: 6,  themeKey: 'animaliak', word: 'igel',   emoji: '🐸', syllablesCount: 2, syllableParts: ['I','GEL'] },
+
+  { id: 7,  themeKey: 'eskola', word: 'liburu', emoji: '📖', syllablesCount: 3, syllableParts: ['LI','BU','RU'] },
+  { id: 8,  themeKey: 'eskola', word: 'arkatz', emoji: '✏️', syllablesCount: 2, syllableParts: ['AR','KATZ'] },
+  { id: 9,  themeKey: 'eskola', word: 'mahai',  emoji: '🪵', syllablesCount: 2, syllableParts: ['MA','HAI'] },
+  { id: 10, themeKey: 'eskola', word: 'goma',   emoji: '🧼', syllablesCount: 2, syllableParts: ['GO','MA'] },
+  { id: 11, themeKey: 'eskola', word: 'paper',  emoji: '📄', syllablesCount: 2, syllableParts: ['PA','PER'] },
+
+  { id: 12, themeKey: 'arropa', word: 'txano',  emoji: '🧢', syllablesCount: 2, syllableParts: ['TXA','NO'] },
+  { id: 13, themeKey: 'arropa', word: 'gona',   emoji: '👗', syllablesCount: 2, syllableParts: ['GO','NA'] },
+  { id: 14, themeKey: 'arropa', word: 'bota',   emoji: '👢', syllablesCount: 2, syllableParts: ['BO','TA'] },
+  { id: 15, themeKey: 'arropa', word: 'blusa',  emoji: '👚', syllablesCount: 2, syllableParts: ['BLU','SA'] },
+  { id: 16, themeKey: 'arropa', word: 'motz',   emoji: '🩳', syllablesCount: 1, syllableParts: ['MOTZ'] },
+
+  { id: 17, themeKey: 'koloreak', word: 'gorri',  emoji: '❤️', syllablesCount: 2, syllableParts: ['GOR','RI'] },
+  { id: 18, themeKey: 'koloreak', word: 'urdin',  emoji: '💙', syllablesCount: 2, syllableParts: ['UR','DIN'] },
+  { id: 19, themeKey: 'koloreak', word: 'berde',  emoji: '💚', syllablesCount: 2, syllableParts: ['BER','DE'] },
+  { id: 20, themeKey: 'koloreak', word: 'arrosa', emoji: '🩷', syllablesCount: 3, syllableParts: ['AR','RO','SA'] },
+  { id: 21, themeKey: 'koloreak', word: 'lila',   emoji: '💜', syllablesCount: 2, syllableParts: ['LI','LA'] },
+
+  { id: 22, themeKey: 'parkea', word: 'zuhaitz', emoji: '🌳', syllablesCount: 2, syllableParts: ['ZU','HAITZ'] },
+  { id: 23, themeKey: 'parkea', word: 'lore',    emoji: '🌸', syllablesCount: 2, syllableParts: ['LO','RE'] },
+  { id: 24, themeKey: 'parkea', word: 'banku',   emoji: '🪵', syllablesCount: 2, syllableParts: ['BAN','KU'] },
+  { id: 25, themeKey: 'parkea', word: 'pilota',  emoji: '⚽', syllablesCount: 3, syllableParts: ['PI','LO','TA'] },
+  { id: 26, themeKey: 'parkea', word: 'hodei',   emoji: '☁️', syllablesCount: 2, syllableParts: ['HO','DEI'] },
+
+  { id: 27, themeKey: 'janaria', word: 'madari', emoji: '🍐', syllablesCount: 3, syllableParts: ['MA','DA','RI'] },
+  { id: 28, themeKey: 'janaria', word: 'ogi',    emoji: '🍞', syllablesCount: 2, syllableParts: ['O','GI'] },
+  { id: 29, themeKey: 'janaria', word: 'mahats', emoji: '🍇', syllablesCount: 2, syllableParts: ['MA','HATS'] },
+  { id: 30, themeKey: 'janaria', word: 'arrautz', emoji: '🥚', syllablesCount: 2, syllableParts: ['AR','RAUTZ'] },
+  { id: 31, themeKey: 'janaria', word: 'gazta',  emoji: '🧀', syllablesCount: 2, syllableParts: ['GAZ','TA'] },
+  { id: 32, themeKey: 'janaria', word: 'tarta',  emoji: '🍰', syllablesCount: 2, syllableParts: ['TAR','TA'] }
+]

@@ -1,0 +1,86 @@
+@import './variables.css';
+
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  background: var(--primary-bg);
+  color: var(--primary-text);
+  font-family: var(--font-family-normal);
+}
+
+.container {
+  width: min(92vw, 900px);
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+}
+
+.screen {
+  background: var(--container-bg);
+  border-radius: 16px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+  padding: 18px;
+}
+
+h1, h2 { color: var(--accent-color); }
+
+.button {
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 12px 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.button.secondary {
+  background: #607d8b;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 16px;
+}
+.card {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 8px;
+  padding: 18px 14px; border-radius: 12px; border: 1px solid var(--border-color-light);
+  background: var(--box-bg);
+}
+.emoji { font-size: 42px; }
+
+/* Word tiles */
+.word-boxes { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+.word-box {
+  min-width: 80px; height: 52px; display:flex; align-items:center; justify-content:center;
+  background: var(--box-bg); border: 2px dashed var(--border-color-light); border-radius: 10px;
+  font-weight: 700; color: var(--accent-color);
+}
+.letter-tile {
+  min-width: 80px; height: 50px; display:flex; align-items:center; justify-content:center;
+  background: var(--tile-bg); border-radius: 10px; border-bottom: 4px solid var(--tile-border);
+  color: var(--tile-text); font-weight: 800; cursor: grab; user-select:none;
+}
+.feedback { font-weight: 700; color: var(--feedback-info); min-height: 28px; text-align: center; }
+.feedback.correct { color: var(--feedback-correct); }
+.feedback.incorrect { color: var(--feedback-incorrect); }
+.level-indicator { background: var(--accent-color); color: white; border-radius: 16px; padding: 6px 12px; font-weight: 800; }
+
+/* Button states */
+.button.selected { outline: 3px solid var(--accent-color); outline-offset: 2px; }
+.button.correct { background: var(--feedback-correct); }
+.button.incorrect { background: var(--feedback-incorrect); }
+.button:disabled { opacity: 0.7; cursor: not-allowed; }
+
+/* Horizontal PWA / landscape mode fixes */
+@media (orientation: landscape) and (max-height: 500px) {
+  .container { padding: 10px 12px 20px; }
+  .screen { padding: 12px; overflow-y: auto; max-height: calc(100vh - 40px); }
+  .emoji { font-size: 32px; }
+  .syllable-buttons .button { padding: 6px 10px; font-size: 0.9em; min-width: 50px; }
+  .syllable-buttons .button div:first-child { font-size: 1.1em !important; }
+  .word-box, .letter-tile { min-width: 60px; height: 42px; }
+}
+
+/* Options */
+.font-child { font-family: var(--font-family-child); }
